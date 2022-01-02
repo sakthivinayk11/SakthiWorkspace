@@ -48,7 +48,7 @@ int main()
     (objForTemp.*funPtrHoldAdd)();
     (ptr->*funPtrHoldAdd)();
 
-    
+    //Called From Oustside Fun
     (objForTemp.*objForTemp.holdAddressInsideClass)();
     (ptr->*ptr->holdAddressInsideClass)();
 }
