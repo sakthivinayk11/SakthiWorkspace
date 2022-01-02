@@ -7,44 +7,48 @@ using namespace std;
 class Temp{
     private:
     int a;
-    public:
+   public:
     Temp(int aa):a{aa}{
         cout<<"ParamConst "<<this->a<<endl;
     }
     void printfunc(void);
-    void callUsingPrint(void);
-    using FunPtr = void(Temp::*)();
-    FunPtr newFun = &Temp::callUsingPrint;
+    void callUsingMain(void);
+    void callUsingInside(void);
+
+    using FuncPtrInsideClass = void(Temp::*)();
+    FuncPtrInsideClass holdAddressInsideClass = &Temp::callUsingInside;
 };
 
 void Temp::printfunc(void){
     std::cout<<"PrintFun"<<endl;
+    (this->*holdAddressInsideClass)();
 }
 
-void Temp::callUsingPrint(void){
-    std::cout<<"callUsingPrint"<<endl;
+void Temp::callUsingMain(void){
+    std::cout<<"callUsingMain"<<endl;
 }
 
-void fun(void){
+void Temp::callUsingInside(){
+    std::cout<<"callUsingInside"<<endl;
+}
+void normalFun(void){
     cout<<"Function Pointer"<<endl;
 }
 int main()
 {
-    vector<string> msg {"Hello", "C++", "World", "from", "VS Code", "and the C++ extension!"};
-
-    for (const string& word : msg)
-    {
-        cout << word << " ";
-    }
-    cout << endl;
-
-    using FunPtr = void(*)(void);
-    FunPtr FunPtradd = &fun;
+    using ptrToFun = void(*)(void);
+    ptrToFun FunPtradd = &normalFun;
     FunPtradd();
 
     Temp objForTemp(20);
     Temp *ptr = &objForTemp;
+    using ptrToClassFun = void(Temp::*)();
+    ptrToClassFun funPtrHoldAdd = &Temp::callUsingMain;
     ptr->printfunc();
-    //(ptr->*newFun)();
-   // (objForTemp.Temp::newFun)();
+    (objForTemp.*funPtrHoldAdd)();
+    (ptr->*funPtrHoldAdd)();
+
+    
+    (objForTemp.*objForTemp.holdAddressInsideClass)();
+    (ptr->*ptr->holdAddressInsideClass)();
 }
