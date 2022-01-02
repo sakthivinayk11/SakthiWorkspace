@@ -8,6 +8,7 @@ class Temp{
     private:
     int a;
    public:
+   Temp() = default;
     Temp(int aa):a{aa}{
         cout<<"ParamConst "<<this->a<<endl;
     }
@@ -48,7 +49,10 @@ int main()
     (objForTemp.*funPtrHoldAdd)();
     (ptr->*funPtrHoldAdd)();
 
+    Temp objForTemp2(43);
+    Temp *ptr2 = new Temp;
+    ptr2 = &objForTemp2;
     //Called From Oustside Fun
-    (objForTemp.*objForTemp.holdAddressInsideClass)();
-    (ptr->*ptr->holdAddressInsideClass)();
+    (objForTemp2.*objForTemp2.holdAddressInsideClass)();
+    (ptr2->*ptr2->holdAddressInsideClass)();
 }
