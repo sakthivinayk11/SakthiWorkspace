@@ -6,6 +6,11 @@ typedef struct{
     double doubType;
     bool boolType;
 }_StructType;
+
+
+void funMethod(){
+    std::cout<<" Calling the FunMethod "<<std::endl;
+}
 int main()
 {
     std::cout<<"VoidPointer"<<std::endl;
@@ -22,8 +27,21 @@ int main()
     
     //voidPtr = (double *)32.3;
     voidPtr = (uint32_t *)'0';
-    std::cout<<" pointerToTheIntegerValue ="<<(uint32_t *)voidPtr<<std::endl;
+    std::cout<<" pointerToTheCharValue ="<<(uint32_t *)voidPtr<<std::endl;
 
-   // _StructType structVar = {10,12,14.89,true};
+    uint8_t charVar = 'A';
+    voidPtr = &charVar;
+    std::cout<<" pointerToTheCharAddress ="<<*(uint8_t *)voidPtr<<std::endl;
+
+    _StructType structVar = {88,456,14.89,true};
+    voidPtr = &structVar;
+    (*(_StructType *)voidPtr).doubType = 48.23;
+    std::cout<<" pointerToTheSTructer : "<<(*(_StructType *)voidPtr).variable1<<
+                " Variable 2 : "<<(*(_StructType *)voidPtr).variable2<<
+                " FloatVal : "<<(*(_StructType *)voidPtr).doubType<<
+                " BoolType : "<<(*(_StructType *)voidPtr).boolType<<std::endl;
+
+    void (*ptrFun)(void) = &funMethod;
+    ptrFun();
     return 0;
 }
