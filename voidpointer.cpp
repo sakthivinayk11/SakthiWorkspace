@@ -41,7 +41,7 @@ int main()
                 " FloatVal : "<<(*(_StructType *)voidPtr).doubType<<
                 " BoolType : "<<(*(_StructType *)voidPtr).boolType<<std::endl;
 
-    //void (*ptrFun)(void) = &funMethod;
-    //ptrFun();
+    void (*ptrFun)(void) = &funMethod;
+    ptrFun();
     return 0;
 }
