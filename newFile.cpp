@@ -16,6 +16,9 @@ class Temp{
     void callUsingMain(void);
     void callUsingInside(void);
 
+    void crosscheckFun(){
+        std::cout<<"CrossCheckFun"<<std::endl;
+    }
     using FuncPtrInsideClass = void(Temp::*)();
     FuncPtrInsideClass holdAddressInsideClass = &Temp::callUsingInside;
 };
@@ -23,6 +26,7 @@ class Temp{
 void Temp::printfunc(void){
     std::cout<<"PrintFun"<<endl;
     (this->*holdAddressInsideClass)();
+    this->crosscheckFun();
 }
 
 void Temp::callUsingMain(void){
@@ -39,8 +43,10 @@ int main()
 {
     using ptrToFun = void(*)(void);
     ptrToFun FunPtradd = &normalFun;
-    FunPtradd();
+    (*FunPtradd)();
 
+    void (*ptrFunDumm)(void) = &normalFun;
+    (*ptrFunDumm)();
     Temp objForTemp(20);
     Temp *ptr = &objForTemp;
     using ptrToClassFun = void(Temp::*)();
@@ -53,6 +59,9 @@ int main()
     Temp *ptr2 = new Temp;
     ptr2 = &objForTemp2;
     //Called From Oustside Fun
-    (objForTemp2.*objForTemp2.holdAddressInsideClass)();
+    (objForTemp2.*(objForTemp2.holdAddressInsideClass))();
     (ptr2->*ptr2->holdAddressInsideClass)();
+
+    (objForTemp2.*funPtrHoldAdd)();
+    (ptr->*funPtrHoldAdd)();
 }
