@@ -41,20 +41,27 @@ void normalFun(void){
 }
 int main()
 {
+    //Using Namespace reference for function pointer
     using ptrToFun = void(*)(void);
     ptrToFun FunPtradd = &normalFun;
     (*FunPtradd)();
 
+    //Using Function Pointer
     void (*ptrFunDumm)(void) = &normalFun;
     (*ptrFunDumm)();
+
+    //Create an object and pointer for class Temp
     Temp objForTemp(20);
     Temp *ptr = &objForTemp;
+    //Refer the class function to Function pointer
     using ptrToClassFun = void(Temp::*)();
     ptrToClassFun funPtrHoldAdd = &Temp::callUsingMain;
     ptr->printfunc();
+    //Calling the function pointer with obj and pointer
     (objForTemp.*funPtrHoldAdd)();
     (ptr->*funPtrHoldAdd)();
 
+    //Create a second obj
     Temp objForTemp2(43);
     Temp *ptr2 = new Temp;
     ptr2 = &objForTemp2;
